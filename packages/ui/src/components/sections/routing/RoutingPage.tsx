@@ -33,6 +33,7 @@ import { parseModelIdentifier } from '@/lib/modelIdentifier';
 import { isAutoModel } from '@/lib/routing/autoModel';
 import { useRoutingStore } from '@/stores/useRoutingStore';
 import { JevAccessNote } from '@/components/sections/classification/JevAccessNote';
+import { listModelVariantIds } from '@/lib/modelVariants';
 
 const DEFAULT_VARIANT_VALUE = '__default__';
 const SAVE_DEBOUNCE_MS = 500;
@@ -47,7 +48,7 @@ const useModelVariants = (providerID: string | null | undefined, modelID: string
     if (!providerID || !modelID) return [];
     const provider = providers.find((entry) => entry.id === providerID);
     const model = provider?.models.find((entry) => entry.id === modelID);
-    return model?.variants ? Object.keys(model.variants) : [];
+    return listModelVariantIds(model?.variants);
   }, [modelID, providerID, providers]);
 };
 
